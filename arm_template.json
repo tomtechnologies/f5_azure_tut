@@ -9,7 +9,8 @@
             }
         },
         "vm_os_public": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": ""
         }
     },
     "variables": {
