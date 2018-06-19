@@ -93,7 +93,7 @@
             "type": "Microsoft.Network/networkInterfaces",
             "location": "[resourceGroup().location]",
             "tags": "[variables('default_tags')]",
-            "name": "[variables('f5_nic_name')]",
+            "name": "[concat(variables('f5_nic_name'), '01')]",
             "dependsOn": [
                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('f5_nsg_name'))]",
                 "[concat(resourceId('Microsoft.Network/virtualNetworks/', variables('vnet_name')))]"
@@ -121,7 +121,7 @@
             "type": "Microsoft.Network/networkInterfaces",
             "location": "[resourceGroup().location]",
             "tags": "[variables('default_tags')]",
-            "name": "[variables('app_nic_name')]",
+            "name": "[concat(variables('app_nic_name'), '01')]",
             "dependsOn": [
                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('app_nsg_name'))]",
                 "[concat(resourceId('Microsoft.Network/virtualNetworks/', variables('vnet_name')))]"
