@@ -96,7 +96,7 @@
             "name": "[variables('f5_nic_name')]",
             "dependsOn": [
                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('f5_nsg_name'))]",
-                "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name')), '/subnets/Default')]"
+                "[concat(resourceId('Microsoft.Network/virtualNetworks/', variables('vnet_name')))]"
             ],
             "properties": {
                 "networkSecurityGroup": {
@@ -124,7 +124,7 @@
             "name": "[variables('app_nic_name')]",
             "dependsOn": [
                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('app_nsg_name'))]",
-                "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name')), '/subnets/Default')]"
+                "[concat(resourceId('Microsoft.Network/virtualNetworks/', variables('vnet_name')))]"
             ],
             "properties": {
                 "networkSecurityGroup": {
