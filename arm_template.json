@@ -129,7 +129,7 @@
             "copy": {
                 "name": "iterator",
                 "mode": "Parallel",
-                "count": "[variables('f5_vm_name')]"
+                "count": "[variables('f5_vm_count')]"
             },
             
             "properties": {
@@ -188,7 +188,7 @@
             "copy": {
                 "name": "iterator",
                 "mode": "Parallel",
-                "count": "[variables('app_vm_name')]"
+                "count": "[variables('app_vm_count')]"
             },
             
             "properties": {
