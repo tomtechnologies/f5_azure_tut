@@ -14,25 +14,25 @@
     },
     "variables": {
         "vm_os_username": "tomtec",
-        "vm_os_publickey": [parameters('vm_os_publickey')],
+        "vm_os_publickey": "[parameters('vm_os_public')]",
         "f5_base_name": "f5-appliance",
-        "f5_vm_name": [concat('vm-', [variables('f5_base_name)]],
-        "f5_pip_name": [concat('pip-', [variables('f5_base_name)]],
-        "f5_nic_name": [concat('nic-', [variables('f5_base_name)]],
-        "f5_nsg_name": [concat('nsg-', [variables('f5_base_name)]],
+        "f5_vm_name": "[concat('vm-', variables('f5_base_name'))]",
+        "f5_pip_name": "[concat('pip-', variables('f5_base_name'))]",
+        "f5_nic_name": "[concat('nic-', variables('f5_base_name'))]",
+        "f5_nsg_name": "[concat('nsg-', variables('f5_base_name'))]",
         "f5_vm_size": "D4",
         "app_base_name": "mockapp",
-        "app_vm_name": [concat('vm-', [variables('app_base_name)]],
-        "app_nic_name": [concat('nic-', [variables('app_base_name)]],
-        "app_nsg_name": [concat('nsg-', [variables('app_base_name)]],
+        "app_vm_name": "[concat('vm-', variables('app_base_name'))]",
+        "app_nic_name": "[concat('nic-', variables('app_base_name'))]",
+        "app_nsg_name": "[concat('nsg-', variables('app_base_name'))]",
         "app_vm_size": "D4",
         "vnet_address_space": "10.5.0.0/24",
-        "vnet_name": [concat('vnet-', [variables('f5_base_name)]],
-        "f5_vm_count": 1,
-        "app_vm_count": 1,
-        "default_tags": [parameters('tags')]
-    }
-    "resources": {
+        "vnet_name": "[concat('vnet-', variables('f5_base_name'))]",
+        "f5_vm_count": "1",
+        "app_vm_count": "1",
+        "default_tags": "[parameters('tags')]"
+    },
+    "resources":
     [
         {
             "apiVersion": "2017-10-01",
@@ -47,9 +47,11 @@
                     ]
                 },
                 "subnets": [
-                    "name": "Default",
-                    "properties": {
-                        "networkSecurityGroup": "[variables('vnet_address_space')]"
+                    {
+                        "name": "Default",
+                        "properties": {
+                            "networkSecurityGroup": "[variables('vnet_address_space')]"
+                        }
                     }
                 ]
             }
@@ -59,22 +61,16 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "location": "[resourceGroup().location]",
             "tags": "[variables('default_tags')]",
-            "name": "[variables('f5_nsg_name')]",
-            "properties": {
-                "securityRules": [
-
-                ]
-            }
+            "name": "[variables('f5_nsg_name')]"
         },
         {
             "apiVersion": "2017-10-01",
             "type": "Microsoft.Network/networkSecurityGroups",
             "location": "[resourceGroup().location]",
             "tags": "[variables('default_tags')]",
-            "name": "[variables('f5_nsg_name')]",
+            "name": "[variables('f5_nsg_name')]"
 
         },
-
         {
             "apiVersion": "2017-10-01",
             "type": "Microsoft.Network/networkInterfaces",
@@ -83,16 +79,19 @@
             "properties": {
                 "networkSecurityGroup": {
                     "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('f5_nsg_name'))]"
-                }
-                "ipConfigurations": {
-                    "name": "ipconfig0",
-                    "properties": {
-                        "subnet": {
-                            "privateIPAllocationMethod": "Dynamic",
-                            "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name')), '/subnets/Default'))]"
+                },
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig0",
+                        "properties": {
+                            "subnet": {
+                                "privateIPAllocationMethod": "Dynamic",
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name')), '/subnets/Default'))]"
+                            }
                         }
                     }
-                }
+                ]
+                
             }
         },
         {
@@ -103,16 +102,18 @@
             "properties": {
                 "networkSecurityGroup": {
                     "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('app_nsg_name'))]"
-                }
-                "ipConfigurations": {
-                    "name": "ipconfig0",
-                    "properties": {
-                        "subnet": {
-                            "privateIPAllocationMethod": "Dynamic",
-                            "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name')), '/subnets/Default'))]"
+                },
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig0",
+                        "properties": {
+                            "subnet": {
+                                "privateIPAllocationMethod": "Dynamic",
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name')), '/subnets/Default'))]"
+                            }
                         }
                     }
-                }
+                ]
             }
         },
         {

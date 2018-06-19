@@ -21,7 +21,7 @@ parameter_file_name="parameters.json"
 
 location_long="Australia SouthEast"
 
-az login
+az login > /dev/null
 
 ret=$(az group show --name "${rsg_name}" | wc -l)
 if [ $ret -ne 0 ]; then
@@ -39,6 +39,6 @@ az group deployment create \
     --mode "incremental" \
     --resource-group "${rsg_name}" \
     --template-file "${template_file_name}" \
-    --paramaters-file @"${parameter_file_name}"
+    --parameters @"${parameter_file_name}"
 
 az logout
