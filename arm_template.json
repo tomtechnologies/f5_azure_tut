@@ -100,7 +100,6 @@
             ],
             "properties": {
                 "networkSecurityGroup": {
-                
                     "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('f5_nsg_name'))]"
                 },
                 "ipConfigurations": [
@@ -108,8 +107,11 @@
                         "name": "ipconfig0",
                         "properties": {
                             "privateIPAddress": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIpAddresses', variables('f5_pip_name'))]"
+                            },
                             "subnet": {
-                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name')), '/subnets/Default')]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnet_name'), 'Default')]"
                             }
                         }
                     }
@@ -137,7 +139,7 @@
                         "privateIPAllocationMethod": "Dynamic",
                         "properties": {
                             "subnet": {
-                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name')), '/subnets/Default')]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnet_name'), 'Default')]"
                             }
                         }
                     }
