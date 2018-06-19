@@ -100,7 +100,7 @@
             ],
             "properties": {
                 "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('f5_nsg_name'))]"
+                    "id": "[resourceId('Microsoft.networkSecurityGroup/', variables('f5_nsg_name'))]"
                 },
                 "ipConfigurations": [
                     {
@@ -126,7 +126,7 @@
             "tags": "[variables('default_tags')]",
             "name": "[concat(variables('app_nic_name'), '01')]",
             "dependsOn": [
-                "[concat('Microsoft.Network/networkSecurityGroups/', variables('app_nsg_name'))]",
+                "[concat('Microsoft.Network/networkSecurityGroup/', variables('app_nsg_name'))]",
                 "[concat(resourceId('Microsoft.Network/virtualNetworks/', variables('vnet_name')))]"
             ],
             "properties": {
