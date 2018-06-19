@@ -1,13 +1,16 @@
-#!/usr/bin/bash
+#!bin/bash
 
 env=$1
 
 if [ "${env}" == "" ]; then
     echo "No environment provided"
+    exit 1
 fi
 
-if [ ! "${env}" ~= /^[A-Za-z0-9]+$/ ]; then
+valid="[A-Za-z0-9]"
+if [[ ! ${env} =~ ${valid} ]]; then
     echo "Environment only accepts alphanumeric"
+    exit 1
 fi
 
 
