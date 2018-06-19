@@ -11,19 +11,23 @@
         "vm_os_public": {
             "type": "string",
             "defaultValue": ""
+        },
+        "env": {
+            "type": "string",
+            "defaultValue": "abc"
         }
     },
     "variables": {
         "vm_os_username": "tomtec",
         "vm_os_publickey": "[parameters('vm_os_public')]",
-        "f5_base_name": "f5-appliance",
+        "f5_base_name": "[concat('f5-tut-', parameters('env'))]",
         "f5_vm_name": "[concat('vm-', variables('f5_base_name'))]",
         "f5_pip_name": "[concat('pip-', variables('f5_base_name'))]",
         "f5_nic_name": "[concat('nic-', variables('f5_base_name'))]",
         "f5_nsg_name": "[concat('nsg-', variables('f5_base_name'))]",
         "f5_vm_size": "D4",
-        "app_base_name": "mockapp",
-        "app_vm_name": "[concat('vm-', variables('app_base_name'))]",
+        "app_base_name": "[concat('f5-app-', parameters('env'))]",
+        "app_vm_name": "[concat(variables('app_base_name'))]",
         "app_nic_name": "[concat('nic-', variables('app_base_name'))]",
         "app_nsg_name": "[concat('nsg-', variables('app_base_name'))]",
         "app_vm_size": "D4",
@@ -69,14 +73,31 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "location": "[resourceGroup().location]",
             "tags": "[variables('default_tags')]",
-            "name": "[variables('f5_nsg_name')]"
+            "name": "[variables('app_nsg_name')]"
 
         },
         {
             "apiVersion": "2017-10-01",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "location": "[resourceGroup().location]",
+            "tags": "[variables('default_tags')]",
+            "name": "[variables('f5_pip_name')]",
+            "properties": {
+                "dnsSettings": {
+                    "domainNameLabel": "[concat(variables('f5_vm_name'))]"
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-10-01",
             "type": "Microsoft.Network/networkInterfaces",
+            "location": "[resourceGroup().location]",
             "tags": "[variables('default_tags')]",
             "name": "[variables('f5_nic_name')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkSecurityGroups/', variables('f5_nsg_name'))]",
+                "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name')), '/subnets/Default')]"
+            ],
             "properties": {
                 "networkSecurityGroup": {
                     "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('f5_nsg_name'))]"
@@ -98,8 +119,13 @@
         {
             "apiVersion": "2017-10-01",
             "type": "Microsoft.Network/networkInterfaces",
+            "location": "[resourceGroup().location]",
             "tags": "[variables('default_tags')]",
             "name": "[variables('app_nic_name')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkSecurityGroups/', variables('app_nsg_name'))]",
+                "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name')), '/subnets/Default')]"
+            ],
             "properties": {
                 "networkSecurityGroup": {
                     "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('app_nsg_name'))]"
