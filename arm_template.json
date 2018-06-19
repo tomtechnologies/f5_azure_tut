@@ -29,8 +29,8 @@
         "app_vm_size": "D4",
         "vnet_address_space": "10.5.0.0/24",
         "vnet_name": "[concat('vnet-', variables('f5_base_name'))]",
-        "f5_vm_count": "1",
-        "app_vm_count": "1",
+        "f5_vm_count": 1,
+        "app_vm_count": 1,
         "default_tags": "[parameters('tags')]"
     },
     "resources":
@@ -87,7 +87,7 @@
                         "properties": {
                             "subnet": {
                                 "privateIPAllocationMethod": "Dynamic",
-                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name')), '/subnets/Default'))]"
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name')), '/subnets/Default')]"
                             }
                         }
                     }
@@ -110,7 +110,7 @@
                         "properties": {
                             "subnet": {
                                 "privateIPAllocationMethod": "Dynamic",
-                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name')), '/subnets/Default'))]"
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name')), '/subnets/Default')]"
                             }
                         }
                     }
