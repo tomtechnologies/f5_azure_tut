@@ -99,9 +99,6 @@
                 "[concat(resourceId('Microsoft.Network/virtualNetworks/', variables('vnet_name')))]"
             ],
             "properties": {
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.networkSecurityGroup/', variables('f5_nsg_name'))]"
-                },
                 "ipConfigurations": [
                     {
                         "name": "ipconfig0",
@@ -130,9 +127,6 @@
                 "[concat(resourceId('Microsoft.Network/virtualNetworks/', variables('vnet_name')))]"
             ],
             "properties": {
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('app_nsg_name'))]"
-                },
                 "ipConfigurations": [
                     {
                         "name": "ipconfig0",
