@@ -269,7 +269,7 @@
                     "adminPassword": "[variables('vm_os_password')]",
                     "computerName": "[concat(variables('f5_vm_name'), padLeft(copyIndex(1), 2, '0'))]",
                     "linuxConfiguration": {
-                        "disablePasswordAuthentication": false,
+                        "disablePasswordAuthentication": false
                     }
                 },
                 "networkProfile": {
@@ -323,7 +323,7 @@
                     "adminPassword": "[variables('vm_os_password')]",
                     "computerName": "[concat(variables('app_vm_name'), padLeft(copyIndex(1), 2, '0'))]",
                     "linuxConfiguration": {
-                        "disablePasswordAuthentication": false,
+                        "disablePasswordAuthentication": false
                     }
                 },
                 "networkProfile": {
