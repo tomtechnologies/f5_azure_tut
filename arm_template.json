@@ -249,7 +249,8 @@
             "name": "[concat(variables('f5_vm_name'), padLeft(copyIndex(1), 2, '0'), '01')]",
             "name": "[concat(variables('f5_vm_name'), padLeft(copyIndex(1), 2, '0'), '02')]",
             "dependsOn": [
-                "[concat('Microsoft.Network/networkInterfaces/', variables('f5_nic_name'), padLeft(copyIndex(1), 2, '0'))]"
+                "[concat('Microsoft.Network/networkInterfaces/', variables('f5_nic_name'), padLeft(copyIndex(1), 2, '0'), '01')]",
+                "[concat('Microsoft.Network/networkInterfaces/', variables('f5_nic_name'), padLeft(copyIndex(1), 2, '0'), '02')]"
             ],
             "copy": {
                 "name": "iterator",
