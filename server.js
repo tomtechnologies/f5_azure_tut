@@ -10,7 +10,7 @@ const sql_con = mysql.createConnection({
 	host: config.mysql_host,
 	user: config.mysql_user,
 	password: config.mysql_password,
-	database: config.mysql_crypto_db
+	database: config.mysql_db
 });
 
 
@@ -39,11 +39,11 @@ if (port >= 4000 && port < 5000) {
     app.post('/login', function(req, res) {
         var username = req.body.username;
         var password = req.body.password;
-
+        // Intentionally vulnerable SQL query.
         var query = "SELECT * FROM users WHERE user = '" + username + "' AND pass = '" + password + "';";
 
-        sql.con(query(query, function(err, res) {
-            console.log(res);
+        sql.con(query(query, function(err, sql_res) {
+            res.send(sql_res)
         }));
     });
 }
