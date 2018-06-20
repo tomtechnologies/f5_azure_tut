@@ -37,7 +37,6 @@ tmsh modify ltm virtual HTTP_3002 security-log-profiles replace-all-with { "Log 
 
 tmsh modify ltm virtual HTTP_4001 source-address-translation { type "automap" }
 tmsh modify ltm virtual HTTP_4001 translate-address "enabled"
-tmsh modify ltm virtual HTTP_4001 persist replace-all-with { "cookie" }
 
 tmsh modify ltm virtual HTTP_4002 profiles replace-all-with { "http" }
 tmsh modify ltm virtual HTTP_4002 source-address-translation { type "automap" }
