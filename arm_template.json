@@ -186,11 +186,16 @@
             "type": "Microsoft.Network/networkInterfaces",
             "location": "[resourceGroup().location]",
             "tags": "[variables('default_tags')]",
-            "name": "[concat(variables('app_nic_name'), '0101')]",
+            "name": "[concat(variables('app_nic_name'), padLeft(copyIndex(1), 2, '0'), '01')]",
             "dependsOn": [
                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('app_nsg_name'))]",
                 "[concat(resourceId('Microsoft.Network/virtualNetworks/', variables('vnet_name')))]"
             ],
+            "copy": {
+                "name": "iterator",
+                "mode": "Parallel",
+                "count": "[variables('f5_vm_count')]"
+            },
             "properties": {
                 "ipConfigurations": [
                     {
@@ -211,11 +216,16 @@
             "type": "Microsoft.Network/networkInterfaces",
             "location": "[resourceGroup().location]",
             "tags": "[variables('default_tags')]",
-            "name": "[concat(variables('app_nic_name'), '0102')]",
+            "name": "[concat(variables('app_nic_name'), padLeft(copyIndex(1), 2, '0'), '02')]",
             "dependsOn": [
                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('app_nsg_name'))]",
                 "[concat(resourceId('Microsoft.Network/virtualNetworks/', variables('vnet_name')))]"
             ],
+            "copy": {
+                "name": "iterator",
+                "mode": "Parallel",
+                "count": "[variables('f5_vm_count')]"
+            },
             "properties": {
                 "ipConfigurations": [
                     {
