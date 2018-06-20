@@ -22,7 +22,7 @@ for ip in $ip1 $ip2
 do
     for p in 3001 3002 4001 4002
     do
-        node server.js $ip $p
+        node server.js $ip $p &
         disown
     done
 done
