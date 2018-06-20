@@ -14,17 +14,17 @@ const sql_con = mysql.createConnection({
 });
 
 
-var listen_ip = myArgs[1];
-var listen_port = myArgs[2];
+var listen_ip = myArgs[0];
+var listen_port = myArgs[1];
 
 
 // Basic listening app
-if (port >= 3000 && port < 4000) {
-    app.get('/', (req, res) => res.send("Hello World from " + listen_ip + ":" + port))
+if (listen_port >= 3000 && listen_port < 4000) {
+    app.get('/', (req, res) => res.send("Hello World from " + listen_ip + ":" + listen_port));
 }
 
 // SQL app
-if (port >= 4000 && port < 5000) {
+if (listen_port >= 4000 && listen_port < 5000) {
     sql_con.connect((err) => {
         if (err) throw err;
         console.log('MySQL Connected!');
@@ -40,14 +40,15 @@ if (port >= 4000 && port < 5000) {
         var username = req.body.username;
         var password = req.body.password;
         // Intentionally vulnerable SQL query.
-        var query = "SELECT * FROM users WHERE user = '" + username + "' AND pass = '" + password + "';";
+        var query = "SELECT * FROM user WHERE user = '" + username + "' AND pass = '" + password + "';";
 
-        sql.con(query(query, function(err, sql_res) {
-            res.send(sql_res)
-        }));
+        sql_con.query(query, function(err, result, fields) {
+            if (err) res.send(err);
+            res.send(result);
+        });
     });
 }
 
 
 
-app.listen(listen_ip, listen_port, () => console.log(listen_ip + ":" + port + " Now listening"));
+app.listen(listen_port, listen_ip, () => console.log(listen_ip + ":" + listen_port + " Now listening"));
