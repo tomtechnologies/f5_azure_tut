@@ -1,3 +1,4 @@
+#!/bin/bash
 yum -y install mysql npm nodejs jq
 
 get_ip() {
