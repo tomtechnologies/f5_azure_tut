@@ -20,7 +20,7 @@ mysql < db.sql
 
 for ip in $ip1 $ip2
 do
-    for p in 3001 3002 4001 4002
+    for p in 3001 3002 3003 3004 3005 3006 3007 3008 3009 3010 4001 4002 4003 4004 4005 4006 4007 4008 4009 4010
     do
         node server.js $ip $p &
         disown
