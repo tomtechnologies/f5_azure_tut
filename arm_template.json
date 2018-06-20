@@ -15,22 +15,27 @@
         "env": {
             "type": "string",
             "defaultValue": "abc"
+        },
+        "vm_f5_password": {
+            "type": "string",
+            "defaultValue": "Something.Secure+Hard"
         }
     },
     "variables": {
         "vm_os_username": "tomtec",
         "vm_os_publickey": "[parameters('vm_os_public')]",
+        "vm_f5_password": "[parameters('vm_f5_password')]",
         "f5_base_name": "[concat('f5-tut-', parameters('env'))]",
         "f5_vm_name": "[concat('vm-', variables('f5_base_name'))]",
         "f5_pip_name": "[concat('pip-', variables('f5_base_name'))]",
         "f5_nic_name": "[concat('nic-', variables('f5_base_name'))]",
         "f5_nsg_name": "[concat('nsg-', variables('f5_base_name'))]",
-        "f5_vm_size": "D4",
+        "f5_vm_size": "Standard_DS2_v2",
         "app_base_name": "[concat('f5-app-', parameters('env'))]",
         "app_vm_name": "[concat(variables('app_base_name'))]",
         "app_nic_name": "[concat('nic-', variables('app_base_name'))]",
         "app_nsg_name": "[concat('nsg-', variables('app_base_name'))]",
-        "app_vm_size": "D4",
+        "app_vm_size": "Standard_DS2_v2",
         "vnet_address_space": "10.5.0.0/24",
         "vnet_name": "[concat('vnet-', variables('f5_base_name'))]",
         "f5_vm_count": 1,
@@ -66,7 +71,63 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "location": "[resourceGroup().location]",
             "tags": "[variables('default_tags')]",
-            "name": "[variables('f5_nsg_name')]"
+            "name": "[variables('f5_nsg_name')]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "port_22",
+                        "properties": {
+                            "priority": 100,
+                            "direction": "Inbound",
+                            "access": "Allow",
+                            "destinationPortRange": "22",
+                            "destinationAddressPrefix": "*",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "name": "port_8443",
+                        "properties": {
+                            "priority": 200,
+                            "direction": "Inbound",
+                            "access": "Allow",
+                            "destinationPortRange": "8443",
+                            "destinationAddressPrefix": "*",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "name": "port_443",
+                        "properties": {
+                            "priority": 300,
+                            "direction": "Inbound",
+                            "access": "Allow",
+                            "destinationPortRange": "443",
+                            "destinationAddressPrefix": "*",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "name": "port_80",
+                        "properties": {
+                            "priority": 400,
+                            "direction": "Inbound",
+                            "access": "Allow",
+                            "destinationPortRange": "80",
+                            "destinationAddressPrefix": "*",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "protocol": "Tcp"
+                        }
+                    }
+                ]
+            }
         },
         {
             "apiVersion": "2017-10-01",
@@ -100,13 +161,14 @@
             ],
             "properties": {
                 "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.networkSecurityGroups/', variables('f5_nsg_name'))]"
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('f5_nsg_name'))]"
                 },
                 "ipConfigurations": [
                     {
                         "name": "ipconfig0",
                         "properties": {
                             "privateIPAddress": "Dynamic",
+                            "privateIPAllocationMethod": "Dynamic",
                             "publicIPAddress": {
                                 "id": "[resourceId('Microsoft.Network/publicIpAddresses', variables('f5_pip_name'))]"
                             },
@@ -124,20 +186,43 @@
             "type": "Microsoft.Network/networkInterfaces",
             "location": "[resourceGroup().location]",
             "tags": "[variables('default_tags')]",
-            "name": "[concat(variables('app_nic_name'), '01')]",
+            "name": "[concat(variables('app_nic_name'), '0101')]",
             "dependsOn": [
                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('app_nsg_name'))]",
                 "[concat(resourceId('Microsoft.Network/virtualNetworks/', variables('vnet_name')))]"
             ],
             "properties": {
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('app_nsg_name'))]"
-                },
                 "ipConfigurations": [
                     {
                         "name": "ipconfig0",
-                        "privateIPAllocationMethod": "Dynamic",
                         "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "privateIPAddress": "Dynamic",
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnet_name'), 'Default')]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2017-06-01",
+            "type": "Microsoft.Network/networkInterfaces",
+            "location": "[resourceGroup().location]",
+            "tags": "[variables('default_tags')]",
+            "name": "[concat(variables('app_nic_name'), '0102')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkSecurityGroups/', variables('app_nsg_name'))]",
+                "[concat(resourceId('Microsoft.Network/virtualNetworks/', variables('vnet_name')))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig0",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "privateIPAddress": "Dynamic",
                             "subnet": {
                                 "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnet_name'), 'Default')]"
                             }
@@ -151,7 +236,8 @@
             "type": "Microsoft.Compute/virtualMachines",
             "location": "[resourceGroup().location]",
             "tags": "[variables('default_tags')]",
-            "name": "[concat(variables('f5_vm_name'), padLeft(copyIndex(1), 2, '0'))]",
+            "name": "[concat(variables('f5_vm_name'), padLeft(copyIndex(1), 2, '0'), '01')]",
+            "name": "[concat(variables('f5_vm_name'), padLeft(copyIndex(1), 2, '0'), '02')]",
             "dependsOn": [
                 "[concat('Microsoft.Network/networkInterfaces/', variables('f5_nic_name'), padLeft(copyIndex(1), 2, '0'))]"
             ],
@@ -160,16 +246,21 @@
                 "mode": "Parallel",
                 "count": "[variables('f5_vm_count')]"
             },
-            
+            "plan": {
+                "publisher": "f5-networks",
+                "name": "f5-bigip-virtual-edition-25m-best-hourly",
+                "product": "f5-big-ip-best"
+            },
             "properties": {
                 "hardwareProfile": {
                     "vmSize": "[variables('f5_vm_size')]"
                 },
                 "osProfile": {
                     "adminUsername": "[variables('vm_os_username')]",
+                    "adminPassword": "[variables('vm_f5_password')]",
                     "computerName": "[concat(variables('f5_vm_name'), padLeft(copyIndex(1), 2, '0'))]",
                     "linuxConfiguration": {
-                        "disablePasswordAuthentication": true,
+                        "disablePasswordAuthentication": false,
                         "ssh": {
                             "publicKeys": [
                                 {
@@ -201,6 +292,7 @@
                         "managedDisk": {
                             "storageAccountType": "Standard_LRS"
                         }
+
                     }
                 }
             }
@@ -242,7 +334,10 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('app_nic_name'), padLeft(copyIndex(1), 2, '0')))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('app_nic_name'), padLeft(copyIndex(1), 2, '0'), '01'))]"
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('app_nic_name'), padLeft(copyIndex(1), 2, '0'), '02'))]"
                         }
                     ]
                 },
