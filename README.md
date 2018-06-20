@@ -55,7 +55,7 @@ You can connnect to your F5 VM on the public IP. Use username `admin` for f5 and
 Public IP:
 f5-tut-<env>.<region>.cloudapp.azure.com
 eg:
-f5-tut-tom.azuresoutheast.cloudapp.azure.com
+f5-tut-tom.australiasoutheast.cloudapp.azure.com
 
 XUI:
 `https://<public ip>:8443`

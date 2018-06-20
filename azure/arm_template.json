@@ -201,6 +201,9 @@
                 "count": "[variables('f5_vm_count')]"
             },
             "properties": {
+                "dnsSettings": {
+                    "internalDnsNameLabel": "[concat(variables('app_nic_name'), padLeft(copyIndex(1), 2, '0'), '01')]"
+                },
                 "ipConfigurations": [
                     {
                         "name": "ipconfig0",
