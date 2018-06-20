@@ -1,0 +1,15 @@
+{
+  "name": "tomtec_tutorial",
+  "description": "Shitty nodejs to demonstrate how2f5",
+  "version": "1.0.0",
+  "Author": "Tom",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mysql": "^2.15.0"
+  }
+}

@@ -3,13 +3,18 @@
 env=$1
 
 if [ "${env}" == "" ]; then
-    echo "No environment provided"
+    echo "No environment provided."
     exit 1
 fi
 
 valid="[A-Za-z0-9]"
 if [[ ! ${env} =~ ${valid} ]]; then
-    echo "Environment only accepts alphanumeric"
+    echo "Environment only accepts alphanumeric."
+    exit 1
+fi
+
+if [ $(echo "${env}" | wc -c) -gt 5 ]; then
+    echo "Environment name must be shorter than 5 characters."
     exit 1
 fi
 
@@ -21,7 +26,7 @@ parameter_file_name="parameters.json"
 
 location_long="Australia SouthEast"
 
-az login > /dev/null
+#az login > /dev/null
 
 ret=$(az group show --name "${rsg_name}" | wc -l)
 if [ $ret -ne 0 ]; then
@@ -41,4 +46,4 @@ az group deployment create \
     --template-file "${template_file_name}" \
     --parameters @"${parameter_file_name}"
 
-az logout
+#az logout
