@@ -14,8 +14,8 @@ const sql_con = mysql.createConnection({
 });
 
 
-var listen_ip = myArgs[0];
-var listen_port = myArgs[1];
+var listen_ip = myArgs[1];
+var listen_port = myArgs[2];
 
 
 // Basic listening app

@@ -4,7 +4,7 @@ curl -sL https://rpm.nodesource.com/setup_10.x | sudo -E bash -
 yum -y install mysql npm nodejs jq mariadb-server server
 
 get_ip() {
-    ip_list=$(curl -H Metadata:true "http://169.254.169.254/metadata/instance/network?api-version=2017-08-01" | grep 'privateIpAddress' |awk '{print $2}' | sed -e 's/\"//g' -e 's/,//g')
+    ip_list=$(curl -s -H Metadata:true "http://169.254.169.254/metadata/instance/network?api-version=2017-08-01" | grep -oE 'privateIpAddress[^,]+'  | awk -F ':' '{print $2}' | sed 's/\"//g')
 
     echo $ip_list
 }
