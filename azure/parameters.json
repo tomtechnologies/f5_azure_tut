@@ -14,8 +14,7 @@
         "vm_os_password": {
             "value": "Something.Secure+Hard"
         },
-        "environment_tags": {
-            "type": "object",
+        "tags": {
             "value": {
                 "provider": "tomtec",
                 "purpose": "f5_tutorial"

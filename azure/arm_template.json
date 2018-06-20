@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "environment_tags": {
+        "tags": {
             "type": "object",
             "defaultValue": {
                 "provider": "tomtec"
@@ -44,7 +44,7 @@
         "vnet_name": "[concat('vnet-', variables('f5_base_name'))]",
         "f5_vm_count": 1,
         "app_vm_count": 1,
-        "default_tags": "[parameters('environment_tags')]"
+        "default_tags": "[parameters('tags')]"
     },
     "resources":
     [
