@@ -270,14 +270,6 @@
                     "computerName": "[concat(variables('f5_vm_name'), padLeft(copyIndex(1), 2, '0'))]",
                     "linuxConfiguration": {
                         "disablePasswordAuthentication": false,
-                        "ssh": {
-                            "publicKeys": [
-                                {
-                                    "keyData": "[variables('vm_os_publickey')]",
-                                    "path": "[concat('/home/', variables('vm_os_username'), '/.ssh/authorized_keys')]"
-                                }
-                            ]
-                        }
                     }
                 },
                 "networkProfile": {
@@ -332,14 +324,6 @@
                     "computerName": "[concat(variables('app_vm_name'), padLeft(copyIndex(1), 2, '0'))]",
                     "linuxConfiguration": {
                         "disablePasswordAuthentication": false,
-                        "ssh": {
-                            "publicKeys": [
-                                {
-                                    "keyData": "[variables('vm_os_publickey')]",
-                                    "path": "[concat('/home/', variables('vm_os_username'), '/.ssh/authorized_keys')]"
-                                }
-                            ]
-                        }
                     }
                 },
                 "networkProfile": {

@@ -13,7 +13,7 @@ if [[ ! ${env} =~ ${valid} ]]; then
     exit 1
 fi
 
-if [ $(echo "${env}" | wc -c) -gt 3 ]; then
+if [ $(echo -n "${env}" | wc -c) -gt 3 ]; then
     echo "Environment name must be shorter than 3 characters."
     exit 1
 fi
