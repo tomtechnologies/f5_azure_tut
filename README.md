@@ -46,14 +46,24 @@ Change Parameters:
 `vm_os_user` - Login user for your VM's.
 `vm_os_password` - This is your admin password for your VM's. Note that your F5 is going to have a public IP so you probably want this somewhat secure.
 
-Run build
-```
-./build.sh
-```
+### Deploy
+`./build.sh`
 
-You can connnect to your vm on the public IP
+### Use
+You can connnect to your F5 VM on the public IP. Use username `admin`
 
-`ssh <username>@f5-tut-<env>.<region>.cloudapp.azure.com`
-
+Public IP:
+f5-tut-<env>.<region>.cloudapp.azure.com
 eg:
-`ssh tomtec@f5-tut-tom.azuresoutheast.cloudapp.azure.com`
+f5-tut-tom.azuresoutheast.cloudapp.azure.com
+
+XUI:
+`https://<public ip>:8443`
+
+SSH:
+`ssh <username>@<public ip>`
+
+### Cleanup
+Note that this will delete all resources deployed into your resource-group
+
+`./build.sh delete-rg`
