@@ -43,8 +43,11 @@ if (listen_port >= 4000 && listen_port < 5000) {
         var query = "SELECT * FROM user WHERE user = '" + username + "' AND pass = '" + password + "';";
 
         sql_con.query(query, function(err, result, fields) {
-            if (err) res.send(err);
-            res.send(result);
+            if (err) {
+            res.send(err);
+            } else {
+                res.send(result);
+            }
         });
     });
 }

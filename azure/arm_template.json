@@ -16,17 +16,21 @@
             "type": "string",
             "defaultValue": ""
         },
+        "vm_os_user": {
+            "type": "string",
+            "defaultValue": "tomtec"
+        },
         "vm_os_password": {
             "type": "string",
-            "defaultValue": "Something.Secure+Hard"
+            "defaultValue": ""
         }
     },
     "variables": {
-        "vm_os_username": "tomtec",
+        "vm_os_username": "[parameters('vm_os_user')]",
         "vm_os_publickey": "[parameters('vm_os_public')]",
         "vm_os_password": "[parameters('vm_os_password')]",
         "f5_base_name": "[concat('f5-tut-', parameters('env'))]",
-        "f5_vm_name": "[concat('vm-', variables('f5_base_name'))]",
+        "f5_vm_name": "[concat(variables('f5_base_name'))]",
         "f5_pip_name": "[concat('pip-', variables('f5_base_name'))]",
         "f5_nic_name": "[concat('nic-', variables('f5_base_name'))]",
         "f5_nsg_name": "[concat('nsg-', variables('f5_base_name'))]",

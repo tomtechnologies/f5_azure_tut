@@ -1,5 +1,5 @@
 #!/bin/bash
-yum install -y gcc-c++ make
+yum -y install gcc-c++ make
 curl -sL https://rpm.nodesource.com/setup_10.x | sudo -E bash -
 yum -y install mysql npm nodejs jq mariadb-server server
 
@@ -18,23 +18,14 @@ npm -i
 
 mysql < db.sql
 
-node server.js $ip1 3001 &
-disown
-node server.js $ip2 3001 &
-disown
-node server.js $ip1 3002 &
-disown
-node server.js $ip2 3002 &
-disown
-
-node server.js $ip1 4001 &
-disown
-node server.js $ip2 4001 &
-disown
-node server.js $ip1 4002 &
-disown
-node server.js $ip2 4002 &
-disown
+for ip in $ip1 $ip2
+do
+    for p in 3001 3002 4001 4002
+    do
+        node server.js $ip $p
+        disown
+    done
+done
 
 
 
