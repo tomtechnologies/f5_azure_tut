@@ -14,6 +14,7 @@ ip1=$(echo $ips | awk '{print $1}')
 ip2=$(echo $ips | awk '{print $2}')
 
 service maridb start
+npm -i
 
 mysql < db.sql
 
