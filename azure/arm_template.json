@@ -250,7 +250,7 @@
             "type": "Microsoft.Compute/virtualMachines",
             "location": "[resourceGroup().location]",
             "tags": "[variables('default_tags')]",
-            "name": "[concat(variables('f5_vm_name'), padLeft(copyIndex(1), 2, '0'), '01')]",
+            "name": "[concat(variables('f5_vm_name'), padLeft(copyIndex(1), 2, '0'))]",
             "dependsOn": [
                 "[concat('Microsoft.Network/networkInterfaces/', variables('f5_nic_name'), padLeft(copyIndex(1), 2, '0'))]"
             ],
