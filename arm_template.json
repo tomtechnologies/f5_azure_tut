@@ -16,7 +16,7 @@
             "type": "string",
             "defaultValue": "abc"
         },
-        "vm_f5_password": {
+        "vm_os_password": {
             "type": "string",
             "defaultValue": "Something.Secure+Hard"
         }
@@ -24,7 +24,7 @@
     "variables": {
         "vm_os_username": "tomtec",
         "vm_os_publickey": "[parameters('vm_os_public')]",
-        "vm_f5_password": "[parameters('vm_f5_password')]",
+        "vm_os_password": "[parameters('vm_os_password')]",
         "f5_base_name": "[concat('f5-tut-', parameters('env'))]",
         "f5_vm_name": "[concat('vm-', variables('f5_base_name'))]",
         "f5_pip_name": "[concat('pip-', variables('f5_base_name'))]",
@@ -266,7 +266,7 @@
                 },
                 "osProfile": {
                     "adminUsername": "[variables('vm_os_username')]",
-                    "adminPassword": "[variables('vm_f5_password')]",
+                    "adminPassword": "[variables('vm_os_password')]",
                     "computerName": "[concat(variables('f5_vm_name'), padLeft(copyIndex(1), 2, '0'))]",
                     "linuxConfiguration": {
                         "disablePasswordAuthentication": false,
@@ -328,9 +328,10 @@
                 },
                 "osProfile": {
                     "adminUsername": "[variables('vm_os_username')]",
+                    "adminPassword": "[variables('vm_os_password')]",
                     "computerName": "[concat(variables('app_vm_name'), padLeft(copyIndex(1), 2, '0'))]",
                     "linuxConfiguration": {
-                        "disablePasswordAuthentication": true,
+                        "disablePasswordAuthentication": false,
                         "ssh": {
                             "publicKeys": [
                                 {
