@@ -50,7 +50,7 @@ Change Parameters:
 `./build.sh`
 
 ### Use
-You can connnect to your F5 VM on the public IP. Use username `admin`
+You can connnect to your F5 VM on the public IP. Use username `admin` for f5 and vm_os_username value for host (default `tomtec`).
 
 Public IP:
 f5-tut-<env>.<region>.cloudapp.azure.com
