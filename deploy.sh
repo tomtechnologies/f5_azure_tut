@@ -44,13 +44,13 @@ az group deployment create \
     --parameters @"${parameter_file_name}" > deployment.json
 
 # Run install on F5 VM. TODO: > 9 count
-for c in {1..$(cat ${template_file_name} | jq '.variables.f5_vm_count')}
+for c in {1...$(cat ${template_file_name} | jq '.variables.f5_vm_count')}
 do
     az vm run-command invoke -g "${rsg_name}" -n "f5-tut-${env}0${c}" --command-id RunShellScript --scripts "sudo yum -y install git ; git clone 'https://github.com/tomtechnologies/f5_azure_tut.git' ; cd f5_azure_tut/f5 ; sudo bash install.sh"
 done
 
 # Run install on App VM. TODO: > 9 count
-for c in {1..$(cat ${template_file_name} | jq '.variables.app_vm_count')}
+for c in {1...$(cat ${template_file_name} | jq '.variables.app_vm_count')}
 do
     az vm run-command invoke -g "${rsg_name}" -n "f5-app-${env}0${c}" --command-id RunShellScript --scripts "sudo yum -y install git ; git clone 'https://github.com/tomtechnologies/f5_azure_tut.git' ; cd f5_azure_tut/app ; sudo bash install.sh"
 done
