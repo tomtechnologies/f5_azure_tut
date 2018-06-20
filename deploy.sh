@@ -52,7 +52,7 @@ az group deployment create \
 END=$(cat ${template_file_name} | jq '.variables.f5_vm_count')
 for ((i=1;i<=END;i++))
 do
-    az vm run-command invoke -g "${rsg_name}" -n "f5-tut-${env}0${i}" --command-id RunShellScript --scripts "sudo yum -y install git ; git clone 'https://github.com/tomtechnologies/f5_azure_tut.git' ; cd f5_azure_tut/f5 ; sudo bash install.sh"
+    az vm run-command invoke -g "${rsg_name}" -n "f5-tut-${env}0${i}" --command-id RunShellScript --scripts "curl https://codeload.github.com/tomtechnologies/f5_azure_tut/zip/master -s -o master.zip ; unzip master.zip ; cd f5_azure_tut-master/f5 ; sudo bash install.sh"
 done
 
 # Run install on App VM. TODO: > 9 count
