@@ -42,9 +42,9 @@ Edit `azure/parameters.json`
 
 Change Parameters:
 
-`env` - Alphanumberic 1-6 characters.
-`vm_os_user` - Login user for your VM's.
-`vm_os_password` - This is your admin password for your VM's. Note that your F5 is going to have a public IP so you probably want this somewhat secure.
+- `env` - Alphanumberic 1-6 characters.
+- `vm_os_user` - Login user for your VM's.
+- `vm_os_password` - This is your admin password for your VM's. Note that your F5 is going to have a public IP so you probably want this somewhat secure.
 
 ### Deploy
 `./build.sh`
