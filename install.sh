@@ -1,4 +1,6 @@
 #!/bin/bash
+yum install -y gcc-c++ make
+curl -sL https://rpm.nodesource.com/setup_10.x | sudo -E bash -
 yum -y install mysql npm nodejs jq
 
 get_ip() {
@@ -10,6 +12,8 @@ get_ip() {
 ips=$(get_ip)
 ip1=$(echo $ips | awk '{print $1}')
 ip2=$(echo $ips | awk '{print $2}')
+
+service mysql start
 
 mysql < db.sql
 

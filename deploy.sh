@@ -46,7 +46,8 @@ az group deployment create \
     --template-file "${template_file_name}" \
     --parameters @"${parameter_file_name}"
 
-az vm run-command invoke -g "${rsg_name}" -n "vm-f5-app-${env}01" --command-id RunShellScript --scripts "git clone 'https://github.com/tomtechnologies/f5_azure_tut.git' ; cd f5_azure_tut ; bash install.sh & ; disown"
+az vm run-command invoke -g "${rsg_name}" -n "f5-app-${env}01" --command-id RunShellScript --scripts "sudo yum -y install git ; git clone 'https://github.com/tomtechnologies/f5_azure_tut.git' ; cd f5_azure_tut ; sudo bash install.sh"
+
 
 
 #az logout

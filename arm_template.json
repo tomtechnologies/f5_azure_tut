@@ -14,7 +14,7 @@
         },
         "env": {
             "type": "string",
-            "defaultValue": "abc"
+            "defaultValue": ""
         },
         "vm_os_password": {
             "type": "string",

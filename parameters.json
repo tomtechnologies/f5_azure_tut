@@ -4,6 +4,9 @@
     "parameters": {
         "vm_os_public": {
             "value": "!!!"
+        },
+        "env": {
+            "value": "tom"
         }
     }
 }
