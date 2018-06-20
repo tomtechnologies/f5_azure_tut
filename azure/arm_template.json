@@ -129,6 +129,32 @@
                             "sourcePortRange": "*",
                             "protocol": "Tcp"
                         }
+                    },
+                    {
+                        "name": "port_3000_3999",
+                        "properties": {
+                            "priority": 500,
+                            "direction": "Inbound",
+                            "access": "Allow",
+                            "destinationPortRange": "3000-3999",
+                            "destinationAddressPrefix": "*",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "name": "port_4000_4999",
+                        "properties": {
+                            "priority": 600,
+                            "direction": "Inbound",
+                            "access": "Allow",
+                            "destinationPortRange": "4000-4999",
+                            "destinationAddressPrefix": "*",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "protocol": "Tcp"
+                        }
                     }
                 ]
             }
@@ -234,6 +260,9 @@
                 "count": "[variables('f5_vm_count')]"
             },
             "properties": {
+                "dnsSettings": {
+                    "internalDnsNameLabel": "[concat(variables('app_nic_name'), padLeft(copyIndex(1), 2, '0'), '02')]"
+                },
                 "ipConfigurations": [
                     {
                         "name": "ipconfig0",
